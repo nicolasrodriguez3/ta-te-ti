@@ -1,0 +1,96 @@
+body {
+	background: #202020;
+	color: #eee;
+	width: 100%;
+	min-height: 100vh;
+	min-width: 320px;
+	overflow-x: hidden;
+	display: flex;
+	place-items: center;
+}
+
+h1 {
+	font-size: 3rem;
+	margin-bottom: 0.5rem;
+}
+
+button {
+	border-radius: 8px;
+	border: 2px solid transparent;
+	padding: 0.6em 1.2em;
+	font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+	background-color: #eee;
+	color: #1a1a1a;
+	cursor: pointer;
+	transition: border-color 0.25s;
+}
+button:hover {
+	border-color: #1a1a1a;
+}
+button:focus,
+button:focus-visible {
+	outline: 4px auto -webkit-focus-ring-color;
+}
+
+#root {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 1rem;
+	text-align: center;
+}
+
+.board {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.5rem;
+}
+
+.has-winner {
+	filter: blur(5px);
+}
+
+.square {
+	width: 5rem;
+	height: 5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid #eee;
+	border-radius: 8px;
+	text-align: center;
+	font-size: 2rem;
+	cursor: pointer;
+}
+
+.turn {
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+.turn .is-turn {
+	background-color: rgb(13, 101, 188);
+}
+
+.winner-modal {
+	background-color: rgb(13, 101, 188);
+	padding: 2rem 4rem;
+	border-radius: 1rem;
+	position: absolute;
+	z-index: 99;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+	border: 2px solid #eee;
+}
+.winner-modal button {
+	margin-top: 1rem;
+	font-size: 1rem;
+}
