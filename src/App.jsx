@@ -7,6 +7,8 @@ import { TURNS } from "./constants"
 import { checkWinner } from "./logic/board"
 import WinnerModal from "./components/WinnerModal"
 import { deleteGameFromStorage, saveGameInStorage } from "./logic/storage"
+import choiceSoundFile from "./sound/correct-choice-43861.mp3"
+import winnerSoundFile from "./sound/success-fanfare-trumpets-6185.mp3"
 
 function App() {
 	const [board, setBoard] = useState(() => {
@@ -20,6 +22,9 @@ function App() {
 		return turnFromLocalStorage ?? TURNS.X
 	})
 	const [winner, setWinner] = useState(null)
+
+	const winnerSound = new Audio(winnerSoundFile)
+	const turnSound = new Audio(choiceSoundFile)
 
 	const updateSquare = (index) => {
 		if (board[index] || winner) return
@@ -35,6 +40,7 @@ function App() {
 		const newWinner = checkWinner(newBoard)
 		if (newWinner) {
 			confetti()
+			winnerSound.play()
 			setWinner(newWinner)
 			deleteGameFromStorage()
 			return
@@ -47,6 +53,7 @@ function App() {
 		//guardar la partida en localStorage
 		saveGameInStorage(newBoard, newTurn)
 
+		turnSound.play()
 		setTurn(newTurn)
 	}
 
@@ -65,28 +72,21 @@ function App() {
 			<main className={winner === null ? "board" : "board has-winner"}>
 				{board.map((square, index) => {
 					return (
-						<Square
-							key={index}
-							index={index}
-							updateSquare={updateSquare}>
+						<Square key={index} index={index} updateSquare={updateSquare}>
 							{square}
 						</Square>
 					)
 				})}
 			</main>
 
-			<WinnerModal
-				winner={winner}
-				handleReset={handleReset}
-			/>
+			<WinnerModal winner={winner} handleReset={handleReset} />
 
 			<section className={winner === null ? "turn" : "turn has-winner"}>
-				<Square className={turn === TURNS.X ? "is-turn" : ""}>{TURNS.X}</Square>
-				<Square className={turn === TURNS.O ? "is-turn" : ""}>{TURNS.O}</Square>
+				<div className={turn === TURNS.X ? "is-turn" : ""}>{TURNS.X}</div>
+				<div className={turn === TURNS.O ? "is-turn" : ""}>{TURNS.O}</div>
 			</section>
 		</>
 	)
 }
 
 export default App
-
